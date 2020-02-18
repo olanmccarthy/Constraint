@@ -1,3 +1,5 @@
+package assignment1;
+
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
@@ -37,7 +39,7 @@ public class Pioneer116443264 {
 
             //loop through all befores and constrain the first item in the befores to be greater than or equal to
             //the second value in the before
-            for(var i =0; i < reader.getNumBefores(); i++){
+            for(int i =0; i < reader.getNumBefores(); i++){
                 model.arithm(experimentsDone[reader.getBefores()[i][0]], ">=", experimentsDone[reader.getBefores()[i][1]]).post();
             }
 
