@@ -70,7 +70,7 @@ public class Residents116443264 {
         //regex: any amount of 1s or 0s then a break period of at least getBreakPeriod followed by any amount of 1s or 0s
         FiniteAutomaton breakPeriodRegex = new FiniteAutomaton("[0,1]*0{"+ reader.getBreakPeriod() + ",}[0,1]*");
         //regex: any occurrence of 0 surrounded by 1s must be at least size getRestPeriod
-        FiniteAutomaton minBreakSizeRegex = new FiniteAutomaton("([1]*0{" + reader.getRestPeriod() + ",}[1]*)*");
+        FiniteAutomaton minBreakSizeRegex = new FiniteAutomaton("(1*0{" + reader.getRestPeriod() + ",}1*)*");
 
         //loop through all the residents and post the above regex constraints
         for(int res = 0; res < reader.getNumResidents(); res++){
@@ -125,6 +125,10 @@ public class Residents116443264 {
         model.setObjective(Model.MINIMIZE, totalShiftsDone);
         //create the solver
         Solver solver = model.getSolver();
+
+        //set time limit to solver to guarantee completion of execution
+        //note: on my own laptop this class finds a complete solution after 60s so to check that please remove below line
+        solver.limitTime("60s");
 
         while(solver.solve()){
             System.out.println("Solution " + solver.getSolutionCount() + ":-------------------------");
